@@ -7,7 +7,7 @@ using GoogleARCore.HelloAR;
 public class TouchInput : MonoBehaviour
 {
     private bool touchable;
-    private Controller Controller;
+    private ControllerScript Controllers;
     private List<GameObject> touchList = new List<GameObject>();
     private GameObject[] touchesOld;
     private Vector3 position;
@@ -57,7 +57,7 @@ public class TouchInput : MonoBehaviour
                     }
                     if (Input.GetMouseButton(0))
                     {
-                        position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 2));
+                        position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1));
 
                         //touchPosition = Vector3.Lerp(hit.rigidbody.position, position, .1f);
                         hit.rigidbody.transform.position = position;

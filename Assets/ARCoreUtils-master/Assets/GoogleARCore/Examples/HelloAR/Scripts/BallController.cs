@@ -29,7 +29,7 @@ public class BallController : MonoBehaviour
         rb.useGravity = true;
         rb.AddForce(transform.up * upthrust);
         rb.AddForce(transform.forward * thrust);
-        rb.AddTorque(transform.up * 1000f * Input.GetAxis("Horizontal"));
+        //rb.AddTorque(transform.up * 1000f * Input.GetAxis("Horizontal") *);
     }
     void OnTouchStay()
     {

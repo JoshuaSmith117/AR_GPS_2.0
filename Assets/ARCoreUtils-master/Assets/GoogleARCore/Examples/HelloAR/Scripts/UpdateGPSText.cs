@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GoogleARCore;
+using GoogleARCore.HelloAR;
 
 public class UpdateGPSText : MonoBehaviour
 {
     public Text coordinates;
-
+    private void Start()
+    {
+    }
     private void Update()
     {
         coordinates.text = "Lat:" + GPS.Instance.latitude.ToString() + "   Long:" + GPS.Instance.longitude.ToString();

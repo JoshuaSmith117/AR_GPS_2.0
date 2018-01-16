@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1572810102006750
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 54439109244122496}
   - component: {fileID: 114582892908293846}
   m_Layer: 0
-  m_Name: Basketball
+  m_Name: basketball
   m_TagString: basketball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
