@@ -1,13 +1,25 @@
-﻿using GoogleARCore;
+﻿using GoogleARCore.HelloAR;
+using GoogleARCore;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ARSurfaceManager : MonoBehaviour
 {
-	[SerializeField] Material m_surfaceMaterial;
-	List<TrackedPlane> m_newPlanes = new List<TrackedPlane>();
+    private ControllerScript controlScript;
+    private GameObject surfaceObj;
 
-	void Update()
+    [SerializeField] Material m_surfaceMaterial;
+    [SerializeField] Material grid;
+    [SerializeField] Material ARSurfaceMat;
+    List<TrackedPlane> m_newPlanes = new List<TrackedPlane>();
+
+    private void Start()
+    {
+        controlScript = GameObject.FindObjectOfType<ControllerScript>();
+        surfaceObj = null;
+    }
+
+    void Update()
 	{
 #if UNITY_EDITOR
 		return;
@@ -22,8 +34,21 @@ public class ARSurfaceManager : MonoBehaviour
 
 		foreach (var plane in m_newPlanes)
 		{
-			var surfaceObj = new GameObject("ARSurface");
-			surfaceObj.AddComponent<ARSurface>().SetTrackedPlane(plane, m_surfaceMaterial);
-		}
-	}
+			surfaceObj = new GameObject("ARSurface");
+            surfaceObj.AddComponent<ARSurface>().SetTrackedPlane(plane, grid);
+        }
+
+        if (controlScript.goals.Length <= 0)
+        {
+            Debug.Log(controlScript.goals.Length);
+            surfaceObj.GetComponent<ARSurface>().GetComponent<Renderer>().material = grid;
+            Debug.Log(surfaceObj.GetComponent<ARSurface>().GetComponent<Renderer>().material);
+        }
+        else if (controlScript.goals.Length >= 1)
+        {
+            Debug.Log(controlScript.goals.Length);
+            surfaceObj.GetComponent<ARSurface>().GetComponent<Renderer>().material = ARSurfaceMat;
+            Debug.Log(surfaceObj.GetComponent<ARSurface>().GetComponent<Renderer>().material);
+        }
+    }
 }

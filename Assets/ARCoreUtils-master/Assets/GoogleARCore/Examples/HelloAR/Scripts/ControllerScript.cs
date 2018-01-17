@@ -33,11 +33,11 @@ namespace GoogleARCore.HelloAR
     {
         public Text coordinates;
         public bool canTouch = true;
-        public bool isGoalPlaced = false;
-        public DistanceFromGoal distanceScript;
+        public GameObject[] goals;
 
         private GameObject[] basketballs;
         private ParticleSystem goalPlaceParticles;
+        
 
         /// <summary>
         /// The first-person camera being used to render the passthrough camera image (i.e. AR background).
@@ -94,6 +94,7 @@ namespace GoogleARCore.HelloAR
         public void Update()
         {
             basketballs = GameObject.FindGameObjectsWithTag("basketball");
+            goals = GameObject.FindGameObjectsWithTag("goal");
 
             if (Input.GetKey(KeyCode.Escape))
             {
@@ -159,7 +160,8 @@ namespace GoogleARCore.HelloAR
 
                     if (Session.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
                     {
-                        if (isGoalPlaced == false) {
+                        if (goals.Length <= 0)
+                        {
                             var basketballGoalObject = Instantiate(BasketballGoalPrefab, hit.Pose.position, hit.Pose.rotation);
 
                             // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
@@ -173,11 +175,11 @@ namespace GoogleARCore.HelloAR
 
                             // Make Andy model a child of the anchor.
                             basketballGoalObject.transform.parent = anchor.transform;
-                            isGoalPlaced = true;
                             Debug.Log("Goal has been placed.");
                         }
 
-                        else if(isGoalPlaced == true){
+                        else if (goals.Length >= 1)
+                        {
                             var basketballObject = Instantiate(BasketballPrefab, hit.Pose.position, hit.Pose.rotation);
 
                             // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical

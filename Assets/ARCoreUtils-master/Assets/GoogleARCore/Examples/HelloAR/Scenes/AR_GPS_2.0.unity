@@ -401,8 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coordinates: {fileID: 837427243}
   canTouch: 1
-  isGoalPlaced: 0
-  distanceScript: {fileID: 0}
+  goals: []
   FirstPersonCamera: {fileID: 989943870}
   TrackedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
     type: 2}
@@ -550,6 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34ef0ac461b1c824088fa467f14784fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dist: 0
   distText: {fileID: 10180251}
 --- !u!1 &957149963
 GameObject:
@@ -1113,6 +1113,21 @@ Prefab:
       propertyPath: m_surfaceMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 92b1ca249edc047509db2c7bc05789ef, type: 2}
+    - target: {fileID: 114560403693966616, guid: 4210f69c7abef404b91eddf60aca16bc,
+        type: 2}
+      propertyPath: grid
+      value: 
+      objectReference: {fileID: 2100000, guid: 92b1ca249edc047509db2c7bc05789ef, type: 2}
+    - target: {fileID: 114560403693966616, guid: 4210f69c7abef404b91eddf60aca16bc,
+        type: 2}
+      propertyPath: ARSurface
+      value: 
+      objectReference: {fileID: 2100000, guid: 803693aece80a6d4eb3195f138746a7f, type: 2}
+    - target: {fileID: 114560403693966616, guid: 4210f69c7abef404b91eddf60aca16bc,
+        type: 2}
+      propertyPath: ARSurfaceMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 803693aece80a6d4eb3195f138746a7f, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4210f69c7abef404b91eddf60aca16bc, type: 2}
   m_IsPrefabParent: 0

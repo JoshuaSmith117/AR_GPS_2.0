@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScoreHandler : MonoBehaviour {
     
-    private int score = 30;
+    private int score = 0;
     private Text scoretxt;
     private ParticleSystem goalParticles;
 

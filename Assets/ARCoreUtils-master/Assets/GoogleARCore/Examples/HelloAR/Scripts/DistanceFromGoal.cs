@@ -5,9 +5,11 @@ using GoogleARCore.HelloAR;
 using UnityEngine.UI;
 
 public class DistanceFromGoal : MonoBehaviour {
+
     private ControllerScript controllerScript;
     private GameObject basketballGoal;
-    private float dist;
+
+    public float dist = 0;
     public Text distText;
 
 	// Use this for initialization
@@ -17,12 +19,11 @@ public class DistanceFromGoal : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (controllerScript.isGoalPlaced == true)
+        if (controllerScript.goals.Length >= 1)
         {
-            basketballGoal = GameObject.Find("BasketballGoal");
+            basketballGoal = GameObject.FindGameObjectWithTag("goal");
             dist = Vector3.Distance(basketballGoal.transform.position, transform.position);
             distText.text = "Distance to Goal: " + dist;
-            Debug.Log(dist);
         }
     }
 }

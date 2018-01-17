@@ -6,18 +6,19 @@ using GoogleARCore.HelloAR;
 
 public class BallController : MonoBehaviour
 {
-
-    private Rigidbody rb;
-    public float distance;
     public float thrust;
     public float upthrust;
     public float torque;
 
+    private Rigidbody rb;
     private TouchInput ti;
+    private DistanceFromGoal distscript;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        distscript = GameObject.FindObjectOfType<DistanceFromGoal>();
+
     }
 
     void OnTouchDown()
@@ -27,9 +28,8 @@ public class BallController : MonoBehaviour
     void OnTouchUp()
     {
         rb.useGravity = true;
-        rb.AddForce(transform.up * upthrust);
-        rb.AddForce(transform.forward * thrust);
-        //rb.AddTorque(transform.up * 1000f * Input.GetAxis("Horizontal") *);
+        rb.AddForce(transform.up * upthrust * distscript.dist);
+        rb.AddForce(transform.forward * thrust * distscript.dist);
     }
     void OnTouchStay()
     {
