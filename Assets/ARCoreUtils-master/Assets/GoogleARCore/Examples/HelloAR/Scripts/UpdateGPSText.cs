@@ -7,16 +7,26 @@ using GoogleARCore.HelloAR;
 
 public class UpdateGPSText : MonoBehaviour
 {
+    private ControllerScript control;
+
     public Text coordinates;
     private void Start()
     {
+        control = FindObjectOfType<ControllerScript>();
     }
     private void Update()
     {
-        coordinates.text = "Lat:" + GPS.Instance.latitude.ToString() + "   Long:" + GPS.Instance.longitude.ToString();
-        if (GPS.Instance.inAssemblyHall == true)
+        if (control.isGoalPlaced == true)
         {
-            coordinates.text += System.Environment.NewLine + "You are in Assmebly Hall";
+            coordinates.enabled = false;
+        } else if (control.isGoalPlaced == false)
+        {
+            coordinates.enabled = true;
+            coordinates.text = "Lat:" + GPS.Instance.latitude.ToString() + "   Long:" + GPS.Instance.longitude.ToString();
+            if (GPS.Instance.inAssemblyHall == true)
+            {
+                coordinates.text += System.Environment.NewLine + "You are in Assembly Hall";
+            }
         }
     }
 }

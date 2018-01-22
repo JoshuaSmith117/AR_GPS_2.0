@@ -32,12 +32,28 @@ namespace GoogleARCore.HelloAR
     public class ControllerScript : MonoBehaviour
     {
         public Text coordinates;
+        public Text TipText;
+        public Text Timer;
+        public Text Instruction;
+
+        public Button playBtn;
+
         public bool canTouch = true;
-        public GameObject[] goals;
+        public bool isGoalPlaced;
+        public bool isPlaying;
+        public bool hasBegun;
+        bool searchingForSurfaces;
+
+        public float timeLeft;
 
         private GameObject[] basketballs;
+        public GameObject[] goals;
+        public GameObject startMenu;
+        public GameObject welcomeMenu;
+
         private ParticleSystem goalPlaceParticles;
-        
+
+        private ScoreHandler scoreHandler;
 
         /// <summary>
         /// The first-person camera being used to render the passthrough camera image (i.e. AR background).
@@ -59,7 +75,7 @@ namespace GoogleARCore.HelloAR
         /// <summary>
         /// A gameobject parenting UI for displaying the "searching for planes" snackbar.
         /// </summary>
-        public GameObject SearchingForPlaneUI;
+        public GameObject TipUI;
 
         /// <summary>
         /// A list to hold new planes ARCore began tracking in the current frame. This object is used across
@@ -86,6 +102,7 @@ namespace GoogleARCore.HelloAR
         private void Start()
         {
             goalPlaceParticles = GameObject.Find("goalParticles").GetComponent<ParticleSystem>();
+            scoreHandler = FindObjectOfType<ScoreHandler>();
         }
 
         /// <summary>
@@ -95,6 +112,48 @@ namespace GoogleARCore.HelloAR
         {
             basketballs = GameObject.FindGameObjectsWithTag("basketball");
             goals = GameObject.FindGameObjectsWithTag("goal");
+
+            if (hasBegun == true)
+            {
+                if (searchingForSurfaces == true)
+                {
+                    Instruction.text = "Please scan the ground with your camera.";
+                } else {
+                    Instruction.enabled = false;
+                }
+            }
+
+            if (isPlaying == true)
+            {
+                timeLeft -= Time.deltaTime;
+                timeLeft = Mathf.Round(timeLeft * 100f) / 100f;
+                Timer.text = "Timer: " + timeLeft;
+                if (timeLeft <= 0)
+                {
+                    GameOver();
+                }
+            } else if (isPlaying == false)
+            {
+                Timer.enabled = false;
+            }
+
+            if (goals.Length <= 0)
+            {
+                isGoalPlaced = false;
+                TipUI.SetActive(true);
+                if (isPlaying == false)
+                {
+                    startMenu.SetActive(false);
+                }
+            } else if (goals.Length >= 1)
+            {
+                isGoalPlaced = true;
+                TipUI.SetActive(false);
+                if (isPlaying == false)
+                {
+                    startMenu.SetActive(true);
+                }
+            }
 
             if (Input.GetKey(KeyCode.Escape))
             {
@@ -130,17 +189,21 @@ namespace GoogleARCore.HelloAR
 
             // Disable the snackbar UI when no planes are valid.
             Frame.GetPlanes(m_AllPlanes);
-            bool showSearchingUI = true;
+            searchingForSurfaces = true;
             for (int i = 0; i < m_AllPlanes.Count; i++)
             {
                 if (m_AllPlanes[i].TrackingState == TrackingState.Tracking)
                 {
-                    showSearchingUI = false;
+                    searchingForSurfaces = false;
+                    TipText.text = "Tap to place a basketball goal.";
+                    break;
+                }
+                else {
+                    searchingForSurfaces = true;
+                    TipText.text = "Searching for surfaces...";
                     break;
                 }
             }
-
-            SearchingForPlaneUI.SetActive(showSearchingUI);
 
             if (GPS.Instance.inAssemblyHall == true)
             {
@@ -160,10 +223,9 @@ namespace GoogleARCore.HelloAR
 
                     if (Session.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
                     {
-                        if (goals.Length <= 0)
+                        if (isGoalPlaced == false && hasBegun == true)
                         {
                             var basketballGoalObject = Instantiate(BasketballGoalPrefab, hit.Pose.position, hit.Pose.rotation);
-
                             // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
                             // world evolves.
                             var anchor = hit.Trackable.CreateAnchor(hit.Pose);
@@ -178,7 +240,7 @@ namespace GoogleARCore.HelloAR
                             Debug.Log("Goal has been placed.");
                         }
 
-                        else if (goals.Length >= 1)
+                        else if (isGoalPlaced == true)
                         {
                             var basketballObject = Instantiate(BasketballPrefab, hit.Pose.position, hit.Pose.rotation);
 
@@ -197,6 +259,27 @@ namespace GoogleARCore.HelloAR
                     }
                 }
             }
+        }
+
+        public void Begin()
+        {
+            hasBegun = true;
+        }
+
+        public void PlayGame()
+        {
+            isPlaying = true;
+            startMenu.SetActive(false);
+            Timer.enabled = true;
+            scoreHandler.score = 0;
+        }
+
+        public void GameOver()
+        {
+            isPlaying = false;
+            startMenu.SetActive(true);
+            Timer.enabled = false;
+            timeLeft = 60f;
         }
 
         /// <summary>

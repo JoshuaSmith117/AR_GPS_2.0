@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreHandler : MonoBehaviour {
-    
-    private int score = 0;
+    public bool isGoalPlaced;
+
+    public int score = 0;
     private Text scoretxt;
     private ParticleSystem goalParticles;
 
