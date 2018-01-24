@@ -22,7 +22,7 @@ public class TouchInput : MonoBehaviour
         Debug.Log("start");
         cam = GetComponent<Camera>();
         touchable = true;
-        //touchable = Controller.canTouch;
+        Controllers = FindObjectOfType<ControllerScript>();
     }
 
     // Update is called once per frame
@@ -73,7 +73,7 @@ public class TouchInput : MonoBehaviour
             }
         }
 #endif
-        if (touchable == true)
+        if (Controllers.isPlaying == true)
         {
             if (Input.touchCount > 0)
             {

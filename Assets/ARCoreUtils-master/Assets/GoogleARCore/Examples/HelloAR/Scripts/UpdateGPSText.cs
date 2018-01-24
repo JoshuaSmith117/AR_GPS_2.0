@@ -16,10 +16,10 @@ public class UpdateGPSText : MonoBehaviour
     }
     private void Update()
     {
-        if (control.isGoalPlaced == true)
+        if (control.hasBegun == true)
         {
             coordinates.enabled = false;
-        } else if (control.isGoalPlaced == false)
+        } else if (control.hasBegun == false)
         {
             coordinates.enabled = true;
             coordinates.text = "Lat:" + GPS.Instance.latitude.ToString() + "   Long:" + GPS.Instance.longitude.ToString();

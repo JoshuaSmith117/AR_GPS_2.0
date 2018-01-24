@@ -19,7 +19,7 @@ public class DistanceFromGoal : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (controllerScript.goals.Length >= 1)
+        if (controllerScript.isGoalPlaced)
         {
             basketballGoal = GameObject.FindGameObjectWithTag("goal");
             dist = Vector3.Distance(basketballGoal.transform.position, transform.position);

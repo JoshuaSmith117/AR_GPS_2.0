@@ -141,7 +141,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1608144857}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -220,7 +220,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 40, y: -40}
-  m_SizeDelta: {x: 209.15, y: 167.7}
+  m_SizeDelta: {x: 400, y: 167.7}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &146544504
 MonoBehaviour:
@@ -335,6 +335,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 147248924}
+--- !u!1 &235539970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 235539971}
+  - component: {fileID: 235539973}
+  - component: {fileID: 235539972}
+  m_Layer: 5
+  m_Name: HighscoreText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &235539971
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 235539970}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1608144857}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 40, y: -80}
+  m_SizeDelta: {x: 400, y: 167.7}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &235539972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 235539970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 64
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 6
+    m_MaxSize: 64
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &235539973
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 235539970}
 --- !u!1 &260903962
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,7 +436,7 @@ RectTransform:
   m_Children:
   - {fileID: 1161947537}
   m_Father: {fileID: 1608144857}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -569,7 +643,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1608144857}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -659,12 +733,15 @@ MonoBehaviour:
   TipText: {fileID: 1764419357}
   Timer: {fileID: 615404411}
   Instruction: {fileID: 2034605816}
-  playBtn: {fileID: 1161947540}
+  highscoreText: {fileID: 235539972}
   canTouch: 1
   isGoalPlaced: 0
   isPlaying: 0
+  isPaused: 0
   hasBegun: 0
-  timeLeft: 60
+  searchingForSurfaces: 0
+  timeLeft: 10
+  highscore: 0
   goals: []
   startMenu: {fileID: 260903962}
   welcomeMenu: {fileID: 1230503227}
@@ -675,7 +752,7 @@ MonoBehaviour:
     type: 2}
   BasketballPrefab: {fileID: 1572810102006750, guid: 416deb8cd5e9d1a4c8188cbef96e8208,
     type: 2}
-  BasketballGoalPrefab: {fileID: 1698590779493146, guid: 4742fbb2437d52e4a9dcdb788744e7fa,
+  BasketballGoalPrefab: {fileID: 1647923867416296, guid: 16a7fd4998afeea49ab6c345aa5e7e0b,
     type: 2}
   TipUI: {fileID: 1133631540}
   VisualizePlanes: 0
@@ -1126,7 +1203,7 @@ RectTransform:
   m_Children:
   - {fileID: 1265367434}
   m_Father: {fileID: 1608144857}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1458,6 +1535,7 @@ RectTransform:
   - {fileID: 1133631541}
   - {fileID: 837427242}
   - {fileID: 146544503}
+  - {fileID: 235539971}
   - {fileID: 615404410}
   - {fileID: 2034605814}
   - {fileID: 10180250}
@@ -1656,7 +1734,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1608144857}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

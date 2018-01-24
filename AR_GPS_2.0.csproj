@@ -290,12 +290,12 @@
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\ComputerVision\Scripts\TextureReader.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\ComputerVision\Scripts\TextureReaderApi.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\BallController.cs" />
+    <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\BBallScoreHandler.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\ControllerScript.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\DistanceFromGoal.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\GPS.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\PhoneCamera.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\PointcloudVisualizer.cs" />
-    <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\ScoreHandler.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\TouchInput.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\TrackedPlaneVisualizer.cs" />
     <Compile Include="Assets\ARCoreUtils-master\Assets\GoogleARCore\Examples\HelloAR\Scripts\UpdateGPSText.cs" />
