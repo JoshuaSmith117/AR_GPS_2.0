@@ -740,6 +740,7 @@ MonoBehaviour:
   isPaused: 0
   hasBegun: 0
   searchingForSurfaces: 0
+  flickControls: 1
   timeLeft: 10
   highscore: 0
   goals: []
@@ -793,7 +794,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 702311233}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c40dd46df30037f45ac9efee9b28f4df, type: 3}
   m_Name: 

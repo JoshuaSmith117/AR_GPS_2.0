@@ -652,7 +652,7 @@ GameObject:
   - component: {fileID: 4961383179774426}
   m_Layer: 0
   m_Name: BasketballGoalNewer
-  m_TagString: Untagged
+  m_TagString: goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

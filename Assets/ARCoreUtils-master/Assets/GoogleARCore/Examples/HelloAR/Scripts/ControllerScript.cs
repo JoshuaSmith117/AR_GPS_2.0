@@ -40,6 +40,7 @@ namespace GoogleARCore.HelloAR
         public bool isPaused = false;
         public bool hasBegun = false;
         public bool searchingForSurfaces = true;
+        public bool flickControls;
 
         public float timeLeft;
 
@@ -112,6 +113,14 @@ namespace GoogleARCore.HelloAR
             }
             if (isPlaying == true && isGoalPlaced == true)
             {
+                if (flickControls == true) {
+                    if (basketballs.Length <= 0 )
+                    {
+                        var basketballObject = Instantiate(BasketballPrefab, Camera.main.transform.position - new Vector3 (0, .3f, 0) + Camera.main.transform.forward * .5f, Camera.main.transform.rotation);
+                        basketballObject.transform.parent = Camera.main.transform;
+                        Debug.Log("Ball Spawned");
+                    }
+                }
                 timeLeft -= Time.deltaTime;
                 timeLeft = Mathf.Round(timeLeft * 100f) / 100f;
                 Timer.text = "Timer: " + timeLeft;
@@ -226,7 +235,7 @@ namespace GoogleARCore.HelloAR
 
                             // BasketballGoal should be flush with the plane.
                             basketballGoalObject.transform.rotation = Quaternion.Euler(0.0f,
-                            basketballGoalObject.transform.rotation.eulerAngles.y, basketballGoalObject.transform.rotation.z);
+                            basketballGoalObject.transform.rotation.eulerAngles.y - 180, basketballGoalObject.transform.rotation.z);
 
                             // Make basketballGoal model a child of the anchor.
                             basketballGoalObject.transform.parent = anchor.transform;
@@ -239,20 +248,23 @@ namespace GoogleARCore.HelloAR
                         //If the player is actively shooting at a goal...
                         else if (isGoalPlaced == true && isPlaying == true)
                         {
-                            //Spawn new basketball.
-                            var basketballObject = Instantiate(BasketballPrefab, hit.Pose.position, hit.Pose.rotation);
+                            if (flickControls == false)
+                            {
+                                //Spawn new basketball.
+                                var basketballObject = Instantiate(BasketballPrefab, hit.Pose.position, hit.Pose.rotation);
 
-                            // Create an anchor.
-                            var anchor = hit.Trackable.CreateAnchor(hit.Pose);
+                                // Create an anchor.
+                                var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
-                            // Basketball looks away from camera.
-                            basketballObject.transform.rotation = Quaternion.Euler(0.0f,
-                            basketballObject.transform.rotation.eulerAngles.y, basketballObject.transform.rotation.z);
+                                // Basketball looks away from camera.
+                                basketballObject.transform.rotation = Quaternion.Euler(0.0f,
+                                basketballObject.transform.rotation.eulerAngles.y, basketballObject.transform.rotation.z - 180);
 
-                            // Make basketball model a child of the anchor.
-                            basketballObject.transform.parent = anchor.transform;
+                                // Make basketball model a child of the anchor.
+                                basketballObject.transform.parent = anchor.transform;
 
-                            isPaused = false;
+                                isPaused = false;
+                            }
                         }
                         else if (isGoalPlaced == false && isPlaying == true)
                         {
