@@ -116,8 +116,9 @@ namespace GoogleARCore.HelloAR
                 if (flickControls == true) {
                     if (basketballs.Length <= 0 )
                     {
-                        var basketballObject = Instantiate(BasketballPrefab, Camera.main.transform.position - new Vector3 (0, .3f, 0) + Camera.main.transform.forward * .5f, Camera.main.transform.rotation);
+                        var basketballObject = Instantiate(BasketballPrefab, Camera.main.transform.position - new Vector3(0, .3f, 0) + Camera.main.transform.forward * .5f, Camera.main.transform.rotation);
                         basketballObject.transform.parent = Camera.main.transform;
+                        transform.Rotate(Vector3.right * 90);
                         Debug.Log("Ball Spawned");
                     }
                 }

@@ -8,13 +8,14 @@ public class BallController : MonoBehaviour
 {
     Vector2 touchStart;
     Vector2 touchEnd;
-    int flickTime = 5;
-    int flickLength = 0;
+    float flickTime = 0;
+    float flickLength = 0;
     float ballVelocity;
-    float ballSpeed = 0;
+    float ballSpeed = 0f;
     Vector3 worldAngle;
     private bool GetVelocity;
-    float comfortZone;
+    public float comfortZone;
+    private float swipeDist;
     bool couldbeswipe;
     float startCountdownLength = 0.0f;
     bool startTheTimer = false;
@@ -34,7 +35,6 @@ public class BallController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         distscript = GameObject.FindObjectOfType<DistanceFromGoal>();
-
     }
 
     void OnTouchDown()
@@ -68,7 +68,6 @@ public class BallController : MonoBehaviour
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    flickTime = 5;
                     timeIncrease();
                     couldbeswipe = true;
                     GetVelocity = true;
@@ -91,7 +90,7 @@ public class BallController : MonoBehaviour
                     }
                     break;
                 case TouchPhase.Ended:
-                    var swipeDist = (touch.position - touchStart).magnitude;
+                    swipeDist = (touch.position - touchStart).magnitude;
                     if (couldbeswipe == true && swipeDist > comfortZone) {
                         GetVelocity = false;
                         touchEnd = touch.position;
@@ -99,8 +98,10 @@ public class BallController : MonoBehaviour
                         GetAngle();
                         rb.transform.parent = null;
                         rb.useGravity = true;
-                        rb.AddForce(new Vector3((worldAngle.x * ballSpeed), (worldAngle.y * ballSpeed), (worldAngle.z * ballSpeed)));
-                        rb.AddForce(transform.up * 30);
+                        rb.AddForce((worldAngle.x * ballSpeed * .04f), (worldAngle.y * ballSpeed * .02f * distscript.dist), (worldAngle.z * ballSpeed * .02f * distscript.dist));
+                        Debug.Log("x" + worldAngle.x * ballSpeed * .05f);
+                        Debug.Log("y" + worldAngle.y * ballSpeed * .05f);
+                        Debug.Log("z" + worldAngle.z * ballSpeed * .05f);
                     }
                     break;
             }
@@ -121,24 +122,18 @@ public class BallController : MonoBehaviour
 
     void GetSpeed()
     {
-        flickLength = 90;
         if (flickTime > 0)
         {
-            ballVelocity = flickLength / (flickLength - flickTime);
+            flickTime = flickTime * 10;
+            ballSpeed = swipeDist / (swipeDist * flickTime);
         }
-        ballSpeed = ballVelocity * 2;
-        ballSpeed = ballSpeed - (ballSpeed * 1.65f);
-        if (ballSpeed <= -33)
-        {
-            ballSpeed = -33;
-        }
-        Debug.Log("flick was" + flickTime);
-        flickTime = 5;
+        ballSpeed = ballSpeed * -1000f;
     }
 
     void GetAngle()
     {
-        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y + 100, ((Camera.main.nearClipPlane - 100) * 1.8f)));
+        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y * 2, ((Camera.main.nearClipPlane - 100) * 1.8f)));
+        Debug.Log("touchend.y" + touchEnd.y);
     }
 }
         

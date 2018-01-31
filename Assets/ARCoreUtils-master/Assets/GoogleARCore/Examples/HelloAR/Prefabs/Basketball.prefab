@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1572810102006750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.19, z: 2.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -111,8 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1e67329ba049d146913a82c4b06b6e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 35
-  upthrust: 35
+  comfortZone: 200
+  thrust: 45
+  upthrust: 45
   torque: 100
 --- !u!135 &135060535253295094
 SphereCollider:
