@@ -58,6 +58,8 @@ public class BallController : MonoBehaviour
 
     private void Update()
     {
+        rb.transform.forward = Camera.main.transform.forward;
+
         if (rb.transform.position.y < -10)
         {
             Destroy(this.gameObject);
@@ -98,10 +100,7 @@ public class BallController : MonoBehaviour
                         GetAngle();
                         rb.transform.parent = null;
                         rb.useGravity = true;
-                        rb.AddForce((worldAngle.x * ballSpeed * .04f), (worldAngle.y * ballSpeed * .02f * distscript.dist), (worldAngle.z * ballSpeed * .02f * distscript.dist));
-                        Debug.Log("x" + worldAngle.x * ballSpeed * .05f);
-                        Debug.Log("y" + worldAngle.y * ballSpeed * .05f);
-                        Debug.Log("z" + worldAngle.z * ballSpeed * .05f);
+                        rb.AddForce((worldAngle.x * ballSpeed * .04f), (worldAngle.y * ballSpeed * .015f * distscript.dist), (worldAngle.z * ballSpeed * .015f * distscript.dist));
                     }
                     break;
             }
@@ -132,7 +131,7 @@ public class BallController : MonoBehaviour
 
     void GetAngle()
     {
-        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y * 2, ((Camera.main.nearClipPlane - 100) * 1.8f)));
+        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y * 2.5f, ((Camera.main.nearClipPlane - 100) * 1.8f)));
         Debug.Log("touchend.y" + touchEnd.y);
     }
 }

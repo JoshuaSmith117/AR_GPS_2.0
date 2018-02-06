@@ -6,6 +6,7 @@ TagManager:
   tags:
   - basketball
   - goal
+  - timer
   layers:
   - Default
   - TransparentFX

@@ -30,9 +30,10 @@ namespace GoogleARCore.HelloAR
     {
         public Text coordinates;
         public Text TipText;
-        public Text Timer;
         public Text Instruction;
         public Text highscoreText;
+
+        private Text Timer;
 
         public bool canTouch = true;
         public bool isGoalPlaced = false;
@@ -123,15 +124,21 @@ namespace GoogleARCore.HelloAR
                     }
                 }
                 timeLeft -= Time.deltaTime;
-                timeLeft = Mathf.Round(timeLeft * 100f) / 100f;
-                Timer.text = "Timer: " + timeLeft;
+                if (Mathf.Round(timeLeft) >= 10)
+                {
+                    Timer.text = Mathf.Round(timeLeft).ToString();
+                }
+                else if (Mathf.Round(timeLeft) <= 9 && (Mathf.Round(timeLeft) >= 1))
+                {
+                    Timer.text = "0" + Mathf.Round(timeLeft).ToString();
+                }
                 if (timeLeft <= 0)
                 {
                     GameOver();
                 }
             } else if (isPlaying == false)
             {
-                Timer.enabled = false;
+                //Timer.enabled = false;
             }
 
             if (goals.Length <= 0)
@@ -244,6 +251,9 @@ namespace GoogleARCore.HelloAR
 
                             //Reference scoreHandler script.
                             BBallscoreHandler = FindObjectOfType<BBallScoreHandler>();
+
+                            //Reference Timer
+                            Timer = basketballGoalObject.GetComponentInChildren<Text>();
                         }
 
                         //If the player is actively shooting at a goal...
@@ -305,7 +315,7 @@ namespace GoogleARCore.HelloAR
             isPlaying = false;
             startMenu.SetActive(true);
             Timer.enabled = false;
-            timeLeft = 10f;
+            timeLeft = 10;
             StoreHighscore();
             highscoreText.enabled = true;
             highscoreText.text = "Highscore: " + highscore;

@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 111e4342d00ffdb48b2d720fc0515774
+timeCreated: 1517954906
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: SalvoSerifCond
+  fontNames:
+  - SalvoSerifCond
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 6713463ebe050494588d948923698d14, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
