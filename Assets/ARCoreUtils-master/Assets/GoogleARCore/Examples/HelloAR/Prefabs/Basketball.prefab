@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54439109244122496}
   - component: {fileID: 114582892908293846}
   m_Layer: 0
-  m_Name: basketball
+  m_Name: Basketball
   m_TagString: basketball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
