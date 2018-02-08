@@ -21,6 +21,7 @@
 namespace GoogleARCore.HelloAR
 {
     using System.Collections.Generic;
+    using System.Collections;
     using GoogleARCore;
     using UnityEngine;
     using UnityEngine.Rendering;
@@ -34,6 +35,9 @@ namespace GoogleARCore.HelloAR
         public Text highscoreText;
 
         private Text Timer;
+
+        public bool ballinhand;
+        private bool readytospawn = true;
 
         public bool canTouch = true;
         public bool isGoalPlaced = false;
@@ -115,12 +119,14 @@ namespace GoogleARCore.HelloAR
             if (isPlaying == true && isGoalPlaced == true)
             {
                 if (flickControls == true) {
-                    if (basketballs.Length <= 0 )
+                    if (basketballs.Length <= 10 && readytospawn == true)
                     {
                         var basketballObject = Instantiate(BasketballPrefab, Camera.main.transform.position - new Vector3(0, .3f, 0) + Camera.main.transform.forward * .5f, Camera.main.transform.rotation);
                         basketballObject.transform.parent = Camera.main.transform;
-                        transform.Rotate(Vector3.right * 90);
+                        ballinhand = true;
+                        readytospawn = false;
                         Debug.Log("Ball Spawned");
+                        StartCoroutine(spawntimer());
                     }
                 }
                 timeLeft -= Time.deltaTime;
@@ -284,6 +290,16 @@ namespace GoogleARCore.HelloAR
                     }
                 }
             }
+        }
+
+        IEnumerator spawntimer ()
+        {
+            while (ballinhand == true)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(1);
+            readytospawn = true;
         }
 
         public void Begin()

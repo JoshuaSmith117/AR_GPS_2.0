@@ -203,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &75902900
 RectTransform:
   m_ObjectHideFlags: 0
@@ -896,7 +896,7 @@ MonoBehaviour:
     type: 2}
   BasketballPrefab: {fileID: 1572810102006750, guid: 416deb8cd5e9d1a4c8188cbef96e8208,
     type: 2}
-  BasketballGoalPrefab: {fileID: 1647923867416296, guid: 16a7fd4998afeea49ab6c345aa5e7e0b,
+  BasketballGoalPrefab: {fileID: 1863473859561752, guid: a713903e668561f4b8dee16f6d4e5724,
     type: 2}
   TipUI: {fileID: 1133631540}
   VisualizePlanes: 0

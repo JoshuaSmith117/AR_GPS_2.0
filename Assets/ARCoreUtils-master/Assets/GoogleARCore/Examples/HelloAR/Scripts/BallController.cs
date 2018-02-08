@@ -30,11 +30,13 @@ public class BallController : MonoBehaviour
     private Rigidbody rb;
     private TouchInput ti;
     private DistanceFromGoal distscript;
+    private ControllerScript controller;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         distscript = GameObject.FindObjectOfType<DistanceFromGoal>();
+        controller = GameObject.FindObjectOfType<ControllerScript>();
     }
 
     void OnTouchDown()
@@ -58,7 +60,7 @@ public class BallController : MonoBehaviour
 
     private void Update()
     {
-        rb.transform.forward = Camera.main.transform.forward;
+        //rb.transform.forward = Camera.main.transform.forward;
 
         if (rb.transform.position.y < -10)
         {
@@ -100,7 +102,9 @@ public class BallController : MonoBehaviour
                         GetAngle();
                         rb.transform.parent = null;
                         rb.useGravity = true;
-                        rb.AddForce((worldAngle.x * ballSpeed * .04f), (worldAngle.y * ballSpeed * .015f * distscript.dist), (worldAngle.z * ballSpeed * .015f * distscript.dist));
+                        gameObject.GetComponent<SphereCollider>().enabled = true;
+                        rb.AddForce((worldAngle.x * ballSpeed * .04f), (Mathf.Clamp(worldAngle.y * ballSpeed * .2f, 50, 100) * distscript.dist), (worldAngle.z * ballSpeed * .02f * distscript.dist));
+                        controller.ballinhand = false;
                     }
                     break;
             }
@@ -131,7 +135,7 @@ public class BallController : MonoBehaviour
 
     void GetAngle()
     {
-        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y * 2.5f, ((Camera.main.nearClipPlane - 100) * 1.8f)));
+        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y, ((Camera.main.nearClipPlane - 100) * 1.8f)));
         Debug.Log("touchend.y" + touchEnd.y);
     }
 }
