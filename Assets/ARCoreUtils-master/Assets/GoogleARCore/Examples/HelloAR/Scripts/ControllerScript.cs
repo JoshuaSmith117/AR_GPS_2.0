@@ -56,6 +56,9 @@ namespace GoogleARCore.HelloAR
         public GameObject startMenu;
         public GameObject welcomeMenu;
 
+        [HideInInspector] public GameObject scoreCanvas;
+        private Animator scoreAnimator;
+
         private BBallScoreHandler BBallscoreHandler;
         
         /// The first-person camera being used to render the passthrough camera image (i.e. AR background).
@@ -260,6 +263,8 @@ namespace GoogleARCore.HelloAR
 
                             //Reference Timer
                             Timer = basketballGoalObject.GetComponentInChildren<Text>();
+                            scoreCanvas = GameObject.FindGameObjectWithTag("score");
+                            scoreAnimator = scoreCanvas.GetComponent<Animator>();
                         }
 
                         //If the player is actively shooting at a goal...
@@ -313,6 +318,7 @@ namespace GoogleARCore.HelloAR
         {
             isPlaying = true;
             startMenu.SetActive(false);
+            scoreAnimator.SetTrigger("beginPlay");
             Timer.enabled = true;
             BBallscoreHandler.score = 0;
             Debug.Log("controller script score: " + BBallscoreHandler.score);
