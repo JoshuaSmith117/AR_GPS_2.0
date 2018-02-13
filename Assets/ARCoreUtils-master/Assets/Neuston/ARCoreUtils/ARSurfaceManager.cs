@@ -32,19 +32,18 @@ public class ARSurfaceManager : MonoBehaviour
 
 		Frame.GetPlanes(m_newPlanes, TrackableQueryFilter.New);
 
-		    foreach (var plane in m_newPlanes)
-		    {
-			    surfaceObj = new GameObject("ARSurface");
-                surfaceObj.AddComponent<ARSurface>().SetTrackedPlane(plane, grid);
-            }
-
-            if (controlScript.goals.Length <= 0)
-            {
-                surfaceObj.GetComponent<ARSurface>().GetComponent<Renderer>().material = grid;
-            }
-            else if (controlScript.goals.Length >= 1)
-            {
-                surfaceObj.GetComponent<ARSurface>().GetComponent<Renderer>().material = ARSurfaceMat;
-            }
+		foreach (var plane in m_newPlanes)
+		{
+			surfaceObj = new GameObject("ARSurface");
+            surfaceObj.AddComponent<ARSurface>().SetTrackedPlane(plane, grid);
+        }
+        if (controlScript.goals.Length <= 0)
+        {
+            surfaceObj.GetComponent<ARSurface>().GetComponent<Renderer>().material = grid;
+        }
+        else if (controlScript.goals.Length >= 1)
+        {
+            surfaceObj.GetComponent<ARSurface>().GetComponent<Renderer>().material = ARSurfaceMat;
+        }
     }
 }

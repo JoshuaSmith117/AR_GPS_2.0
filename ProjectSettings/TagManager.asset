@@ -8,6 +8,7 @@ TagManager:
   - goal
   - timer
   - score
+  - backboardlight
   layers:
   - Default
   - TransparentFX

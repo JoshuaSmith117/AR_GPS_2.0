@@ -41,13 +41,11 @@ public class BallController : MonoBehaviour
 
     void OnTouchDown()
     {
-        //rb.AddForce(transform.up * -100);
+
     }
     void OnTouchUp()
     {
         rb.useGravity = true;
-        rb.AddForce(transform.up * upthrust * distscript.dist);
-        rb.AddForce(transform.forward * thrust * distscript.dist);
     }
     void OnTouchStay()
     {
@@ -103,7 +101,7 @@ public class BallController : MonoBehaviour
                         rb.transform.parent = null;
                         rb.useGravity = true;
                         gameObject.GetComponent<SphereCollider>().enabled = true;
-                        rb.AddForce((worldAngle.x * ballSpeed * .04f), (Mathf.Clamp(worldAngle.y * ballSpeed * .2f, 50, 100) * distscript.dist), (worldAngle.z * ballSpeed * .02f * distscript.dist));
+                        rb.AddForce((worldAngle.x * ballSpeed * .04f), (Mathf.Clamp(worldAngle.y * ballSpeed * .1f, 50, 80) * distscript.dist), (worldAngle.z * ballSpeed * .02f * distscript.dist));
                         controller.ballinhand = false;
                     }
                     break;
@@ -135,7 +133,7 @@ public class BallController : MonoBehaviour
 
     void GetAngle()
     {
-        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y, ((Camera.main.nearClipPlane - 100) * 1.8f)));
+        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y * 2, ((Camera.main.nearClipPlane - 100))));
         Debug.Log("touchend.y" + touchEnd.y);
     }
 }

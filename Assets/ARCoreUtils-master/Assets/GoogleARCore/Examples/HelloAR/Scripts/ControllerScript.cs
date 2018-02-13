@@ -55,6 +55,10 @@ namespace GoogleARCore.HelloAR
         public GameObject[] goals;
         public GameObject startMenu;
         public GameObject welcomeMenu;
+        public GameObject gameOverMenu;
+        public GameObject snackBar;
+
+        private GameObject backboardLight;
 
         [HideInInspector] public GameObject scoreCanvas;
         private Animator scoreAnimator;
@@ -108,11 +112,17 @@ namespace GoogleARCore.HelloAR
                     Instruction.enabled = true;
                     Instruction.text = "Please scan the ground with your camera.";
                 }
+
+                else if (searchingForSurfaces == false && goals.Length <= 0)
+                {
+                    Instruction.enabled = true;
+                    Instruction.text = "Please tap the grid to place a goal.";
+                }
                 //If the player lost the loactaion of the basketball goal.
                 else if (isPaused == true)
                 {
                     Instruction.enabled = true;
-                    Instruction.text = "Please scan the ares again to find the basketball goal.";
+                    Instruction.text = "Please scan the area again to find the basketball goal.";
                 }
                 else
                 {
@@ -210,11 +220,16 @@ namespace GoogleARCore.HelloAR
                 if (m_AllPlanes[i].TrackingState == TrackingState.Tracking)
                 {
                     searchingForSurfaces = false;
-                    TipText.text = "Tap to place a basketball goal.";
+                    snackBar.SetActive(false);
+                    if (hasBegun == true && goals.Length <= 0) {
+                        snackBar.SetActive(true);
+                        TipText.text = "Waiting for goal to be placed...";
+                    }
                     break;
                 }
                 else {
                     searchingForSurfaces = true;
+                    snackBar.SetActive(true);
                     TipText.text = "Searching for surfaces...";
                     break;
                 }
@@ -265,6 +280,7 @@ namespace GoogleARCore.HelloAR
                             Timer = basketballGoalObject.GetComponentInChildren<Text>();
                             scoreCanvas = GameObject.FindGameObjectWithTag("score");
                             scoreAnimator = scoreCanvas.GetComponent<Animator>();
+                            backboardLight = GameObject.FindGameObjectWithTag("backboardlight");
                         }
 
                         //If the player is actively shooting at a goal...
@@ -310,7 +326,6 @@ namespace GoogleARCore.HelloAR
         public void Begin()
         {
             hasBegun = true;
-            highscoreText.enabled = true;
             highscoreText.text = "Highscore: " + highscore;
         }
 
@@ -318,29 +333,45 @@ namespace GoogleARCore.HelloAR
         {
             isPlaying = true;
             startMenu.SetActive(false);
+            gameOverMenu.SetActive(false);
+            backboardLight.SetActive(false);
             scoreAnimator.SetTrigger("beginPlay");
             Timer.enabled = true;
+            timeLeft = 10;
             BBallscoreHandler.score = 0;
             Debug.Log("controller script score: " + BBallscoreHandler.score);
-            highscoreText.enabled = false;
         }
 
         public void PauseGame()
         {
             isPaused = true;
-            highscoreText.enabled = true;
             highscoreText.text = "Highscore: " + highscore;
         }
 
         public void GameOver()
         {
             isPlaying = false;
-            startMenu.SetActive(true);
-            Timer.enabled = false;
-            timeLeft = 10;
+            gameOverMenu.SetActive(true);
+            //Timer.enabled = false;
+            timeLeft = 0;
+            Timer.text = "00";
+            backboardLight.SetActive(true);
             StoreHighscore();
-            highscoreText.enabled = true;
             highscoreText.text = "Highscore: " + highscore;
+        }
+
+        public void MainMenu()
+        {
+            hasBegun = false;
+            isPlaying = false;
+            gameOverMenu.SetActive(false);
+            welcomeMenu.SetActive(true);
+            backboardLight.SetActive(false);
+            Timer.enabled = false;
+            foreach (GameObject goal in goals)
+            {
+                Destroy(goal);
+            }
         }
 
         void StoreHighscore()

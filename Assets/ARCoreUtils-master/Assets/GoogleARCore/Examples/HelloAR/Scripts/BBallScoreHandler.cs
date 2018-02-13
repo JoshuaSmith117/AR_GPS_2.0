@@ -15,6 +15,7 @@ public class BBallScoreHandler : MonoBehaviour {
     private ParticleSystem goalParticles;
 
     private ControllerScript controller;
+    private DistanceFromGoal distscript;
 
     // Use this for initialization
     void Start () {
@@ -29,11 +30,10 @@ public class BBallScoreHandler : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        score += 1;
+        score += distscript.shotvalue;
         goalParticles.Play();
         Debug.Log("GOAL!");
         Debug.Log("score handler score: " + score);
-
     }
 
 }

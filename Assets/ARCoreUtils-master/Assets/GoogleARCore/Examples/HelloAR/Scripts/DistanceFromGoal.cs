@@ -11,6 +11,7 @@ public class DistanceFromGoal : MonoBehaviour {
 
     public float dist = 0;
     public Text distText;
+    public int shotvalue;
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +25,19 @@ public class DistanceFromGoal : MonoBehaviour {
             basketballGoal = GameObject.FindGameObjectWithTag("goal");
             dist = Vector3.Distance(basketballGoal.transform.position, transform.position);
             distText.text = "Distance to Goal: " + dist;
+
+            if (dist >= 4)
+            {
+                shotvalue = 3;
+            }
+            else if (dist >= 3)
+            {
+                shotvalue = 2;
+            }
+            else
+            {
+                shotvalue = 1;
+            }
         }
     }
 }
