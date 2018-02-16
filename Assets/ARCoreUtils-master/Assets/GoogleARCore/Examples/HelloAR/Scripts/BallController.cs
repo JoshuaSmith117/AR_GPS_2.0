@@ -58,7 +58,12 @@ public class BallController : MonoBehaviour
 
     private void Update()
     {
-        //rb.transform.forward = Camera.main.transform.forward;
+        /*Debug.Log("camera.z = " + Camera.main.transform.rotation.z);
+        
+        if (worldAngle != null)
+        {
+            Debug.Log("worldAngle.z = " + worldAngle.z);
+        }*/
 
         if (rb.transform.position.y < -10)
         {
@@ -101,7 +106,9 @@ public class BallController : MonoBehaviour
                         rb.transform.parent = null;
                         rb.useGravity = true;
                         gameObject.GetComponent<SphereCollider>().enabled = true;
-                        rb.AddForce((worldAngle.x * ballSpeed * .04f), (Mathf.Clamp(worldAngle.y * ballSpeed * .1f, 50, 80) * distscript.dist), (worldAngle.z * ballSpeed * .02f * distscript.dist));
+                        //rb.AddForce((worldAngle.x * ballSpeed * .05f) , (Mathf.Clamp(worldAngle.y * ballSpeed * .11f, 50, 80) * (distscript.dist)), (worldAngle.z * ballSpeed * .05f * distscript.dist));
+                        rb.AddForce((Camera.main.transform.forward * ballSpeed * distscript.dist * 2));
+                        rb.AddForce(0, (worldAngle.y * ballSpeed * distscript.dist * -.4f), 0);// * (worldAngle.x * ballSpeed * .05f) * (Mathf.Clamp(worldAngle.y * ballSpeed * .11f, 50, 80)));
                         controller.ballinhand = false;
                     }
                     break;
@@ -127,14 +134,15 @@ public class BallController : MonoBehaviour
         {
             flickTime = flickTime * 10;
             ballSpeed = swipeDist / (swipeDist * flickTime);
+            ballSpeed = ballSpeed * 1000f;
+            Debug.Log("ballspeed = " + ballSpeed);
         }
-        ballSpeed = ballSpeed * -1000f;
     }
 
     void GetAngle()
     {
-        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y * 2, ((Camera.main.nearClipPlane - 100))));
-        Debug.Log("touchend.y" + touchEnd.y);
+        worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y * 2, (Camera.main.nearClipPlane - 100)));
+        //Debug.Log("worldAngle.x" + worldAngle.x);
     }
 }
         

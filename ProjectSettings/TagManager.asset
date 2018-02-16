@@ -9,6 +9,7 @@ TagManager:
   - timer
   - score
   - backboardlight
+  - hoop
   layers:
   - Default
   - TransparentFX

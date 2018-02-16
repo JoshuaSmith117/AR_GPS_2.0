@@ -11,6 +11,7 @@ public class BBallScoreHandler : MonoBehaviour {
     public int score = 0;
 
     private Text scoretxt;
+    private Text shotvaluetxt;
 
     private ParticleSystem goalParticles;
 
@@ -19,18 +20,23 @@ public class BBallScoreHandler : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        scoretxt = GameObject.Find("ScoreText").GetComponent<Text>();
+        distscript = GameObject.FindObjectOfType<DistanceFromGoal>();
+        scoretxt = GameObject.Find("ScoreNum").GetComponent<Text>();
+        shotvaluetxt = GameObject.Find("ShotValueNum").GetComponent<Text>();
         goalParticles = GameObject.Find("goalParticles").GetComponent<ParticleSystem>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        scoretxt.text = "Score: " + score.ToString();
+        scoretxt.text = score.ToString();
+        shotvaluetxt.text = ("+" + distscript.shotvalue.ToString());
     }
 
     void OnTriggerExit(Collider other)
     {
+        Debug.Log("in");
         score += distscript.shotvalue;
+        Debug.Log(distscript.shotvalue);
         goalParticles.Play();
         Debug.Log("GOAL!");
         Debug.Log("score handler score: " + score);

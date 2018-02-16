@@ -155,9 +155,6 @@ namespace GoogleARCore.HelloAR
                 {
                     GameOver();
                 }
-            } else if (isPlaying == false)
-            {
-                //Timer.enabled = false;
             }
 
             if (goals.Length <= 0)
@@ -351,6 +348,7 @@ namespace GoogleARCore.HelloAR
         public void GameOver()
         {
             isPlaying = false;
+            startMenu.SetActive(false);
             gameOverMenu.SetActive(true);
             //Timer.enabled = false;
             timeLeft = 0;

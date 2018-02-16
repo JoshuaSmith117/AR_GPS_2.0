@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class DistanceFromGoal : MonoBehaviour {
 
     private ControllerScript controllerScript;
-    private GameObject basketballGoal;
+    private GameObject basketballHoop;
 
     public float dist = 0;
     public Text distText;
@@ -22,15 +22,15 @@ public class DistanceFromGoal : MonoBehaviour {
 	void Update () {
         if (controllerScript.isGoalPlaced)
         {
-            basketballGoal = GameObject.FindGameObjectWithTag("goal");
-            dist = Vector3.Distance(basketballGoal.transform.position, transform.position);
+            basketballHoop = GameObject.FindGameObjectWithTag("hoop");
+            dist = Vector3.Distance(basketballHoop.transform.position, transform.position);
             distText.text = "Distance to Goal: " + dist;
 
-            if (dist >= 4)
+            if (dist >= 3.8f)
             {
                 shotvalue = 3;
             }
-            else if (dist >= 3)
+            else if (dist >= 2.8f)
             {
                 shotvalue = 2;
             }
