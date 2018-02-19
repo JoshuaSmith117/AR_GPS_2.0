@@ -43,6 +43,7 @@ namespace GoogleARCore.HelloAR
         public bool isGoalPlaced = false;
         public bool isPlaying = false;
         public bool isPaused = false;
+        public bool gameOver = false;
         public bool hasBegun = false;
         public bool searchingForSurfaces = true;
         public bool flickControls;
@@ -169,7 +170,7 @@ namespace GoogleARCore.HelloAR
             {
                 isGoalPlaced = true;
                 TipUI.SetActive(false);
-                if (isPlaying == false)
+                if (isPlaying == false && gameOver == false && hasBegun == true)
                 {
                     startMenu.SetActive(true);
                 }
@@ -329,6 +330,7 @@ namespace GoogleARCore.HelloAR
         public void PlayGame()
         {
             isPlaying = true;
+            gameOver = false;
             startMenu.SetActive(false);
             gameOverMenu.SetActive(false);
             backboardLight.SetActive(false);
@@ -347,10 +349,9 @@ namespace GoogleARCore.HelloAR
 
         public void GameOver()
         {
+            gameOver = true;
             isPlaying = false;
-            startMenu.SetActive(false);
             gameOverMenu.SetActive(true);
-            //Timer.enabled = false;
             timeLeft = 0;
             Timer.text = "00";
             backboardLight.SetActive(true);
@@ -362,6 +363,7 @@ namespace GoogleARCore.HelloAR
         {
             hasBegun = false;
             isPlaying = false;
+            gameOver = false;
             gameOverMenu.SetActive(false);
             welcomeMenu.SetActive(true);
             backboardLight.SetActive(false);

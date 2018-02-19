@@ -108,7 +108,14 @@ public class BallController : MonoBehaviour
                         gameObject.GetComponent<SphereCollider>().enabled = true;
                         //rb.AddForce((worldAngle.x * ballSpeed * .05f) , (Mathf.Clamp(worldAngle.y * ballSpeed * .11f, 50, 80) * (distscript.dist)), (worldAngle.z * ballSpeed * .05f * distscript.dist));
                         rb.AddForce((Camera.main.transform.forward * ballSpeed * distscript.dist * 2));
-                        rb.AddForce(0, (worldAngle.y * ballSpeed * distscript.dist * -.4f), 0);// * (worldAngle.x * ballSpeed * .05f) * (Mathf.Clamp(worldAngle.y * ballSpeed * .11f, 50, 80)));
+                        if (distscript.dist <= 3)
+                        {
+                            rb.AddForce(0, Mathf.Clamp((worldAngle.y * ballSpeed * distscript.dist * -.1f), 40, 100 * distscript.dist), 0);// * (worldAngle.x * ballSpeed * .05f) * (Mathf.Clamp(worldAngle.y * ballSpeed * .11f, 50, 80)));
+                        } else
+                        {
+                            rb.AddForce(0, Mathf.Clamp((worldAngle.y * ballSpeed * distscript.dist * -.1f), 40, 300), 0);
+                        }
+                        
                         controller.ballinhand = false;
                     }
                     break;

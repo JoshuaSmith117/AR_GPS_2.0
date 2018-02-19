@@ -7,6 +7,7 @@ using GoogleARCore.HelloAR;
 public class BBallScoreHandler : MonoBehaviour {
 
     public bool isGoalPlaced;
+    private bool primed;
 
     public int score = 0;
 
@@ -32,14 +33,32 @@ public class BBallScoreHandler : MonoBehaviour {
         shotvaluetxt.text = ("+" + distscript.shotvalue.ToString());
     }
 
-    void OnTriggerExit(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        Debug.Log("in");
-        score += distscript.shotvalue;
-        Debug.Log(distscript.shotvalue);
-        goalParticles.Play();
-        Debug.Log("GOAL!");
-        Debug.Log("score handler score: " + score);
+        if (this.name == "goalTriggerTop")
+        {
+            Debug.Log("IN TOP");
+            IEnumerator coroutine = Prime();
+            StartCoroutine(coroutine);
+        }
+        else if (this.name == "goalTriggerBottom") {
+            Debug.Log("IN BOTTOM");
+            if (primed == true)
+            {
+                score += distscript.shotvalue;
+                Debug.Log(distscript.shotvalue);
+                goalParticles.Play();
+                Debug.Log("GOAL!");
+                Debug.Log("score handler score: " + score);
+            }
+            
+        }
     }
-
+    IEnumerator Prime() {
+        primed = true;
+        Debug.Log(primed);
+        yield return new WaitForSeconds(1);
+        primed = false;
+        Debug.Log(primed);
+    }
 }
