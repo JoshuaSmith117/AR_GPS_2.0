@@ -23,6 +23,8 @@ public class BallController : MonoBehaviour
     static bool shootEnable = false;
     private float startGameTimer = 0.0f;
 
+    private bool inHands;
+
     public float thrust;
     public float upthrust;
     public float torque;
@@ -32,11 +34,13 @@ public class BallController : MonoBehaviour
     private DistanceFromGoal distscript;
     private ControllerScript controller;
 
+    public AudioSource ballthrow;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        distscript = GameObject.FindObjectOfType<DistanceFromGoal>();
-        controller = GameObject.FindObjectOfType<ControllerScript>();
+        distscript = FindObjectOfType<DistanceFromGoal>();
+        controller = FindObjectOfType<ControllerScript>();
     }
 
     void OnTouchDown()
@@ -58,13 +62,6 @@ public class BallController : MonoBehaviour
 
     private void Update()
     {
-        /*Debug.Log("camera.z = " + Camera.main.transform.rotation.z);
-        
-        if (worldAngle != null)
-        {
-            Debug.Log("worldAngle.z = " + worldAngle.z);
-        }*/
-
         if (rb.transform.position.y < -10)
         {
             Destroy(this.gameObject);
@@ -98,7 +95,7 @@ public class BallController : MonoBehaviour
                     break;
                 case TouchPhase.Ended:
                     swipeDist = (touch.position - touchStart).magnitude;
-                    if (couldbeswipe == true && swipeDist > comfortZone) {
+                    if (couldbeswipe == true && swipeDist > comfortZone && tag == "inHands") {
                         GetVelocity = false;
                         touchEnd = touch.position;
                         GetSpeed();
@@ -106,16 +103,16 @@ public class BallController : MonoBehaviour
                         rb.transform.parent = null;
                         rb.useGravity = true;
                         gameObject.GetComponent<SphereCollider>().enabled = true;
-                        //rb.AddForce((worldAngle.x * ballSpeed * .05f) , (Mathf.Clamp(worldAngle.y * ballSpeed * .11f, 50, 80) * (distscript.dist)), (worldAngle.z * ballSpeed * .05f * distscript.dist));
-                        rb.AddForce((Camera.main.transform.forward * ballSpeed * distscript.dist * 2));
-                        if (distscript.dist <= 3)
+                        rb.AddForce((Camera.main.transform.forward * ballSpeed * distscript.dist * 2.1f));
+                        if (distscript.dist <= 2.5f)
                         {
                             rb.AddForce(0, Mathf.Clamp((worldAngle.y * ballSpeed * distscript.dist * -.1f), 40, 100 * distscript.dist), 0);// * (worldAngle.x * ballSpeed * .05f) * (Mathf.Clamp(worldAngle.y * ballSpeed * .11f, 50, 80)));
                         } else
                         {
-                            rb.AddForce(0, Mathf.Clamp((worldAngle.y * ballSpeed * distscript.dist * -.1f), 40, 300), 0);
+                            rb.AddForce(0, Mathf.Clamp((worldAngle.y * ballSpeed * distscript.dist * -.1f), 40, 250), 0);
                         }
-                        
+                        ballthrow.Play();
+                        tag = "basketball";
                         controller.ballinhand = false;
                     }
                     break;
@@ -142,14 +139,12 @@ public class BallController : MonoBehaviour
             flickTime = flickTime * 10;
             ballSpeed = swipeDist / (swipeDist * flickTime);
             ballSpeed = ballSpeed * 1000f;
-            Debug.Log("ballspeed = " + ballSpeed);
         }
     }
 
     void GetAngle()
     {
         worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y * 2, (Camera.main.nearClipPlane - 100)));
-        //Debug.Log("worldAngle.x" + worldAngle.x);
     }
 }
         

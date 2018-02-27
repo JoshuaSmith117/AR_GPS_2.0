@@ -7,7 +7,7 @@ using GoogleARCore.HelloAR;
 public class BBallScoreHandler : MonoBehaviour {
 
     public bool isGoalPlaced;
-    private bool primed;
+    [HideInInspector] public bool primed;
 
     public int score = 0;
 
@@ -16,15 +16,21 @@ public class BBallScoreHandler : MonoBehaviour {
 
     private ParticleSystem goalParticles;
 
+    private GameObject basketballHoop;
+
+    private GameObject ppObject;
+    public GameObject ppPrefab;
+
     private ControllerScript controller;
     private DistanceFromGoal distscript;
 
     // Use this for initialization
     void Start () {
-        distscript = GameObject.FindObjectOfType<DistanceFromGoal>();
+        distscript = FindObjectOfType<DistanceFromGoal>();
         scoretxt = GameObject.Find("ScoreNum").GetComponent<Text>();
         shotvaluetxt = GameObject.Find("ShotValueNum").GetComponent<Text>();
         goalParticles = GameObject.Find("goalParticles").GetComponent<ParticleSystem>();
+        basketballHoop = GameObject.FindGameObjectWithTag("hoop");
     }
 	
 	// Update is called once per frame
@@ -35,30 +41,37 @@ public class BBallScoreHandler : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (this.name == "goalTriggerTop")
+        if (other.transform.position.y >= transform.position.y)
         {
-            Debug.Log("IN TOP");
             IEnumerator coroutine = Prime();
             StartCoroutine(coroutine);
         }
-        else if (this.name == "goalTriggerBottom") {
-            Debug.Log("IN BOTTOM");
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.transform.position.y <= transform.position.y)
+        {
             if (primed == true)
             {
                 score += distscript.shotvalue;
-                Debug.Log(distscript.shotvalue);
                 goalParticles.Play();
-                Debug.Log("GOAL!");
-                Debug.Log("score handler score: " + score);
+                ppObject = Instantiate(ppPrefab,basketballHoop.transform);
+                ppObject.GetComponent<Text>().text = "+" + distscript.shotvalue;
+                ppObject.GetComponent<Rigidbody>().AddForce(Random.Range(-20f, 20f), Random.Range(40f, 80f), 0);
+                IEnumerator coroutine = Despawn();
+                StartCoroutine(coroutine);
             }
-            
         }
     }
     IEnumerator Prime() {
         primed = true;
-        Debug.Log(primed);
         yield return new WaitForSeconds(1);
         primed = false;
-        Debug.Log(primed);
+    }
+
+    IEnumerator Despawn()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(ppObject);
     }
 }

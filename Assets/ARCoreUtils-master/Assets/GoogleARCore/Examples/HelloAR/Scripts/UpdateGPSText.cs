@@ -8,6 +8,7 @@ using GoogleARCore.HelloAR;
 public class UpdateGPSText : MonoBehaviour
 {
     private ControllerScript control;
+    public Text location;
 
     public Text coordinates;
     private void Start()
@@ -25,7 +26,7 @@ public class UpdateGPSText : MonoBehaviour
             coordinates.text = "Lat:" + GPS.Instance.latitude.ToString() + "   Long:" + GPS.Instance.longitude.ToString();
             if (GPS.Instance.inAssemblyHall == true)
             {
-                coordinates.text += System.Environment.NewLine + "You are in Assembly Hall";
+                location.text = "Assembly Hall";
             }
         }
     }
