@@ -26,11 +26,11 @@ public class DistanceFromGoal : MonoBehaviour {
             dist = Vector3.Distance(basketballHoop.transform.position, transform.position);
             distText.text = "Distance to Goal: " + dist;
 
-            if (dist >= 3.8f)
+            if (dist >= 3.6f)
             {
                 shotvalue = 3;
             }
-            else if (dist >= 2.8f)
+            else if (dist >= 2.6f)
             {
                 shotvalue = 2;
             }

@@ -35,6 +35,7 @@ public class BallController : MonoBehaviour
     private ControllerScript controller;
 
     public AudioSource ballthrow;
+    public AudioSource impact;
 
     private void Start()
     {
@@ -95,7 +96,7 @@ public class BallController : MonoBehaviour
                     break;
                 case TouchPhase.Ended:
                     swipeDist = (touch.position - touchStart).magnitude;
-                    if (couldbeswipe == true && swipeDist > comfortZone && tag == "inHands") {
+                    if (couldbeswipe == true && swipeDist > comfortZone && tag == "inHands" && controller.isPaused == false) {
                         GetVelocity = false;
                         touchEnd = touch.position;
                         GetSpeed();
@@ -145,6 +146,14 @@ public class BallController : MonoBehaviour
     void GetAngle()
     {
         worldAngle = Camera.main.ScreenToWorldPoint(new Vector3(touchEnd.x, touchEnd.y * 2, (Camera.main.nearClipPlane - 100)));
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (rb.velocity.y < -1 || rb.velocity.y > 1)
+        {
+            impact.Play();
+        }
     }
 }
         

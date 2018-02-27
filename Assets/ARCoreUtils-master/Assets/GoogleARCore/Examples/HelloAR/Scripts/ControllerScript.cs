@@ -47,7 +47,8 @@ namespace GoogleARCore.HelloAR
         public bool hasBegun = false;
         public bool searchingForSurfaces = true;
         public bool flickControls;
-        
+
+        public AudioSource buzzer;
 
         public float timeLeft;
 
@@ -61,7 +62,6 @@ namespace GoogleARCore.HelloAR
         public GameObject gui;
         public GameObject pauseMenu;
         public GameObject snackBar;
-
         private GameObject backboardLight;
 
         [HideInInspector] public GameObject scoreCanvas;
@@ -132,8 +132,8 @@ namespace GoogleARCore.HelloAR
                 else if (searchingForSurfaces == false && goals.Length <= 0)
                 {
                     Instruction.enabled = true;
+                    Debug.Log("instruction = " + Instruction.enabled);
                     Instruction.text = "Please tap the grid to place a goal.";
-                    Debug.Log("instruction = " + Instruction.text);
                 }
                 //If the player lost the loactaion of the basketball goal.
                 else if (isPaused == true)
@@ -377,9 +377,10 @@ namespace GoogleARCore.HelloAR
 
         public void Continue()
         {
-            isPlaying = true;
+            isPaused = false;
             pauseMenu.SetActive(false);
             gui.SetActive(true);
+            Time.timeScale = 1;
         }
 
         public void PauseGame()
@@ -388,6 +389,7 @@ namespace GoogleARCore.HelloAR
             gui.SetActive(false);
             pauseMenu.SetActive(true);
             highscoreText.text = "Highscore: " + highscore;
+            Time.timeScale = 0;
         }
 
         IEnumerator GameOver()
@@ -398,28 +400,39 @@ namespace GoogleARCore.HelloAR
             Timer.text = "00";
             backboardLight.SetActive(true);
             Destroy(GameObject.FindGameObjectWithTag("inHands"));
+            buzzer.Play();
             yield return new WaitForSeconds(1);
             gui.SetActive(false);
             pauseMenu.SetActive(false);
             gameOverMenu.SetActive(true);
             StoreHighscore();
             highscoreText.text = "Highscore: " + highscore;
+            foreach (GameObject ball in basketballs)
+            {
+                Destroy(ball);
+            }
         }
         
         public void MainMenu()
         {
             hasBegun = false;
             isPlaying = false;
+            isPaused = false;
             gameOver = false;
             gameOverMenu.SetActive(false);
             pauseMenu.SetActive(false);
             backboardLight.SetActive(false);
             Timer.enabled = false;
+            welcomeMenu.SetActive(true);
+            Time.timeScale = 1;
             foreach (GameObject goal in goals)
             {
                 Destroy(goal);
             }
-            welcomeMenu.SetActive(true);
+            foreach (GameObject ball in basketballs)
+            {
+                Destroy(ball);
+            }
         }
 
         void StoreHighscore()
