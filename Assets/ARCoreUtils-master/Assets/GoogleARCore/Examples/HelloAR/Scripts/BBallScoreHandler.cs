@@ -22,6 +22,7 @@ public class BBallScoreHandler : MonoBehaviour {
     public GameObject ppPrefab;
 
     public AudioSource net;
+    public AudioSource point;
 
     private ControllerScript controller;
     private DistanceFromGoal distscript;
@@ -56,6 +57,7 @@ public class BBallScoreHandler : MonoBehaviour {
             if (primed == true)
             {
                 net.Play();
+                point.Play();
                 score += distscript.shotvalue;
                 goalParticles.Play();
                 ppObject = Instantiate(ppPrefab,basketballHoop.transform);

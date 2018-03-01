@@ -24,6 +24,7 @@ public class BallController : MonoBehaviour
     private float startGameTimer = 0.0f;
 
     private bool inHands;
+    private bool soundready = true;
 
     public float thrust;
     public float upthrust;
@@ -37,11 +38,14 @@ public class BallController : MonoBehaviour
     public AudioSource ballthrow;
     public AudioSource impact;
 
+    public TrailRenderer trail;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         distscript = FindObjectOfType<DistanceFromGoal>();
         controller = FindObjectOfType<ControllerScript>();
+        rb.maxAngularVelocity = 1000f;
     }
 
     void OnTouchDown()
@@ -96,7 +100,8 @@ public class BallController : MonoBehaviour
                     break;
                 case TouchPhase.Ended:
                     swipeDist = (touch.position - touchStart).magnitude;
-                    if (couldbeswipe == true && swipeDist > comfortZone && tag == "inHands" && controller.isPaused == false) {
+                    if (couldbeswipe == true && swipeDist > comfortZone && tag == "inHands" && controller.isPaused == false)
+                    {
                         GetVelocity = false;
                         touchEnd = touch.position;
                         GetSpeed();
@@ -108,13 +113,16 @@ public class BallController : MonoBehaviour
                         if (distscript.dist <= 2.5f)
                         {
                             rb.AddForce(0, Mathf.Clamp((worldAngle.y * ballSpeed * distscript.dist * -.1f), 40, 100 * distscript.dist), 0);// * (worldAngle.x * ballSpeed * .05f) * (Mathf.Clamp(worldAngle.y * ballSpeed * .11f, 50, 80)));
-                        } else
+                        }
+                        else
                         {
                             rb.AddForce(0, Mathf.Clamp((worldAngle.y * ballSpeed * distscript.dist * -.1f), 40, 250), 0);
                         }
                         ballthrow.Play();
                         tag = "basketball";
                         controller.ballinhand = false;
+                        trail.enabled = true;
+                        rb.AddRelativeTorque(-1, 0, 0);
                     }
                     break;
             }
@@ -150,10 +158,18 @@ public class BallController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (rb.velocity.y < -1 || rb.velocity.y > 1)
+        if (rb.velocity.y < -1 || rb.velocity.y > 1 && soundready == true)
         {
             impact.Play();
+            soundready = false;
+            StartCoroutine(SoundWait());
         }
+    }
+
+    IEnumerator SoundWait()
+    {
+        yield return new WaitForSeconds(.1f);
+        soundready = true;
     }
 }
         

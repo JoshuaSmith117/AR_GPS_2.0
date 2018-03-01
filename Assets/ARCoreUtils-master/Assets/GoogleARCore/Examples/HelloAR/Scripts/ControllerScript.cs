@@ -33,6 +33,8 @@ namespace GoogleARCore.HelloAR
         public Text TipText;
         public Text Instruction;
         public Text highscoreText;
+        public Text beginHighscoreText;
+        public Text scoreText;
 
         private Text Timer;
 
@@ -51,6 +53,8 @@ namespace GoogleARCore.HelloAR
         public AudioSource buzzer;
 
         public float timeLeft;
+        public float countdown;
+
 
         public int highscore;
 
@@ -63,6 +67,8 @@ namespace GoogleARCore.HelloAR
         public GameObject pauseMenu;
         public GameObject snackBar;
         private GameObject backboardLight;
+
+        public Text countdownText;
 
         [HideInInspector] public GameObject scoreCanvas;
         private Animator scoreAnimator;
@@ -107,6 +113,7 @@ namespace GoogleARCore.HelloAR
 
         public void Update()
         {
+            Debug.Log("Seraching for surfaces = " + searchingForSurfaces);
             basketballs = GameObject.FindGameObjectsWithTag("basketball");
             goals = GameObject.FindGameObjectsWithTag("goal");
             if (hasBegun == false)
@@ -190,10 +197,6 @@ namespace GoogleARCore.HelloAR
             {
                 isGoalPlaced = true;
                 TipUI.SetActive(false);
-                if (isPlaying == false && gameOver == false && hasBegun == true)
-                {
-                    startMenu.SetActive(true);
-                }
             }
             else
             {
@@ -287,6 +290,7 @@ namespace GoogleARCore.HelloAR
                         {
                             //Spawn a basketball goal.
                             var basketballGoalObject = Instantiate(BasketballGoalPrefab, hit.Pose.position, hit.Pose.rotation);
+                            startMenu.SetActive(true);
 
                             // Create an anchor.
                             var anchor = hit.Trackable.CreateAnchor(hit.Pose);
@@ -308,32 +312,6 @@ namespace GoogleARCore.HelloAR
                             scoreAnimator = scoreCanvas.GetComponent<Animator>();
                             backboardLight = GameObject.FindGameObjectWithTag("backboardlight");
                         }
-
-                        //If the player is actively shooting at a goal...
-                        /*else if (isGoalPlaced == true && isPlaying == true)
-                        {
-                            if (flickControls == false)
-                            {
-                                //Spawn new basketball.
-                                var basketballObject = Instantiate(BasketballPrefab, hit.Pose.position, hit.Pose.rotation);
-
-                                // Create an anchor.
-                                var anchor = hit.Trackable.CreateAnchor(hit.Pose);
-
-                                // Basketball looks away from camera.
-                                basketballObject.transform.rotation = Quaternion.Euler(0.0f,
-                                basketballObject.transform.rotation.eulerAngles.y, basketballObject.transform.rotation.z - 180);
-
-                                // Make basketball model a child of the anchor.
-                                basketballObject.transform.parent = anchor.transform;
-
-                                isPaused = false;
-                            }
-                        }
-                        else if (isGoalPlaced == false && isPlaying == true)
-                        {
-                            isPaused = true;
-                        }*/
                     }
                 }
             }
@@ -343,6 +321,29 @@ namespace GoogleARCore.HelloAR
             }
         }
 
+        IEnumerator countdownTimer()
+        {
+            countdown = 3;
+            BBallscoreHandler.score = 0;
+            gameOver = false;
+            startMenu.SetActive(false);
+            gameOverMenu.SetActive(false);
+            backboardLight.SetActive(false);
+            pauseMenu.SetActive(false);
+            gui.SetActive(true);
+            scoreAnimator.SetTrigger("beginPlay");
+            countdownText.enabled = true;
+            while(countdown > 0) {
+                countdown -= Time.deltaTime;
+                countdownText.text = Mathf.Round(countdown).ToString();
+                yield return null;
+            }
+            countdownText.enabled = false;
+            isPlaying = true;
+            Timer.enabled = true;
+            timeLeft = 10;
+            readytospawn = true;
+        }
         IEnumerator spawntimer ()
         {
             while (ballinhand == true)
@@ -356,23 +357,12 @@ namespace GoogleARCore.HelloAR
         public void Begin()
         {
             hasBegun = true;
-            highscoreText.text = "Highscore: " + highscore;
+            beginHighscoreText.text = "Highscore: " + highscore;
         }
 
         public void PlayGame()
         {
-            isPlaying = true;
-            gameOver = false;
-            startMenu.SetActive(false);
-            gameOverMenu.SetActive(false);
-            backboardLight.SetActive(false);
-            pauseMenu.SetActive(false);
-            gui.SetActive(true);
-            scoreAnimator.SetTrigger("beginPlay");
-            Timer.enabled = true;
-            timeLeft = 10;
-            BBallscoreHandler.score = 0;
-            readytospawn = true;
+            StartCoroutine(countdownTimer());
         }
 
         public void Continue()
@@ -406,6 +396,7 @@ namespace GoogleARCore.HelloAR
             pauseMenu.SetActive(false);
             gameOverMenu.SetActive(true);
             StoreHighscore();
+            scoreText.text = "Score: " + BBallscoreHandler.score;
             highscoreText.text = "Highscore: " + highscore;
             foreach (GameObject ball in basketballs)
             {
@@ -433,6 +424,7 @@ namespace GoogleARCore.HelloAR
             {
                 Destroy(ball);
             }
+            Destroy(GameObject.FindGameObjectWithTag("inHands"));
         }
 
         void StoreHighscore()
