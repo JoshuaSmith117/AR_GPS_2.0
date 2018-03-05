@@ -26,6 +26,7 @@ namespace GoogleARCore.HelloAR
     using UnityEngine;
     using UnityEngine.Rendering;
     using UnityEngine.UI;
+    using UnityEngine.SceneManagement;
 
     public class ControllerScript : MonoBehaviour
     {
@@ -471,7 +472,12 @@ namespace GoogleARCore.HelloAR
         {
             Application.Quit();
         }
-        
+
+        public void Reset()
+        {
+            SceneManager.LoadScene("AR_GPS_2.0");
+        }
+
         /// Show an Android toast message.
         /// <param name="message">Message string to show in the toast.</param>
         private void _ShowAndroidToastMessage(string message)
