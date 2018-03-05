@@ -24,10 +24,11 @@ public class UpdateGPSText : MonoBehaviour
         {
             coordinates.enabled = true;
             coordinates.text = "Lat:" + GPS.Instance.latitude.ToString() + "   Long:" + GPS.Instance.longitude.ToString();
-            if (GPS.Instance.inAssemblyHall == true)
-            {
-                location.text = "Assembly Hall";
-            }
+        }
+
+        if (GPS.Instance.inAssemblyHall == true)
+        {
+            location.text = "Assembly Hall";
         }
     }
 }

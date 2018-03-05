@@ -113,7 +113,6 @@ namespace GoogleARCore.HelloAR
 
         public void Update()
         {
-            Debug.Log("Seraching for surfaces = " + searchingForSurfaces);
             basketballs = GameObject.FindGameObjectsWithTag("basketball");
             goals = GameObject.FindGameObjectsWithTag("goal");
             if (hasBegun == false)
@@ -139,8 +138,7 @@ namespace GoogleARCore.HelloAR
                 else if (searchingForSurfaces == false && goals.Length <= 0)
                 {
                     Instruction.enabled = true;
-                    Debug.Log("instruction = " + Instruction.enabled);
-                    Instruction.text = "Please tap the grid to place a goal.";
+                    Instruction.text = "Please scan the ground.";
                 }
                 //If the player lost the loactaion of the basketball goal.
                 else if (isPaused == true)
@@ -247,11 +245,14 @@ namespace GoogleARCore.HelloAR
                     searchingForSurfaces = false;
                     snackBar.SetActive(false);
                     radar.SetActive(false);
-                    menuBBall.SetActive(true);
                     Instruction.enabled = false;
                     if (hasBegun == true && goals.Length <= 0) {
                         snackBar.SetActive(true);
                         TipText.text = "Waiting for goal to be placed...";
+                    }
+                    if (GPS.Instance.inAssemblyHall == true)
+                    {
+                        menuBBall.SetActive(true);
                     }
                     break;
                 }
