@@ -53,7 +53,8 @@ namespace GoogleARCore.HelloAR
 
         public AudioSource buzzer;
 
-        public float timeLeft;
+        public float StarttimeLeft;
+        private float timeLeft;
         public float countdown;
 
 
@@ -343,7 +344,7 @@ namespace GoogleARCore.HelloAR
             countdownText.enabled = false;
             isPlaying = true;
             Timer.enabled = true;
-            timeLeft = 10;
+            timeLeft = StarttimeLeft;
             readytospawn = true;
         }
         IEnumerator spawntimer ()
@@ -475,6 +476,7 @@ namespace GoogleARCore.HelloAR
 
         public void Reset()
         {
+            DontDestroyOnLoad(Camera.main);
             SceneManager.LoadScene("AR_GPS_2.0");
         }
 

@@ -14,10 +14,10 @@ public class GPS : MonoBehaviour
 
     private void Start()
     {
-        AndroidPermissionsManager.RequestPermission("android.permission.ACCESS_FINE_LOCATION");
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        StartCoroutine(StartLocationService());
+            AndroidPermissionsManager.RequestPermission("android.permission.ACCESS_FINE_LOCATION");
+            Instance = this;
+            //DontDestroyOnLoad(gameObject);
+            StartCoroutine(StartLocationService());
     }
 
     private IEnumerator StartLocationService()

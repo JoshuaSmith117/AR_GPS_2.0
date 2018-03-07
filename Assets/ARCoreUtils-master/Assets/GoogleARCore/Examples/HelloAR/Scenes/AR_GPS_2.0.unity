@@ -401,6 +401,11 @@ Prefab:
       propertyPath: m_TagString
       value: MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 114923820857209294, guid: c10877f7cd5764de18d46d7b777d1faa,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c10877f7cd5764de18d46d7b777d1faa, type: 2}
   m_IsPrefabParent: 0
@@ -1693,7 +1698,7 @@ MonoBehaviour:
   searchingForSurfaces: 1
   flickControls: 1
   buzzer: {fileID: 627916104}
-  timeLeft: 0
+  StarttimeLeft: 60
   countdown: 0
   highscore: 0
   goals: []
